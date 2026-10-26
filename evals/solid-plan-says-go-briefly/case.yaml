@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: solid-plan-says-go-briefly
+expected_outcome: |
+  Recognises the plan as solid (shadow mode, triaged per-priority mismatches, strict P1 gate, rehearsed rollback incl. data sync, backup owner), gives a 'go'-type verdict, mentions at most one or two small gaps, and does not manufacture concerns.

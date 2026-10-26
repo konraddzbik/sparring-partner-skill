@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: finance-forecast-base-rates-pl
+expected_outcome: |
+  Polish critique leading with the gap between +60% plan and ~18% historical growth, asks for the growth mechanism, tests sensitivity/downside scenarios, flags costs scaling with volume, gives verdict (warunkowo or similar).

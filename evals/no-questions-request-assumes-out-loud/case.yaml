@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: no-questions-request-assumes-out-loud
+expected_outcome: |
+  Respects the no-questions request: delivers a usable draft, with a short list of stated assumptions (e.g., location, seniority, tools) at the top or bottom.

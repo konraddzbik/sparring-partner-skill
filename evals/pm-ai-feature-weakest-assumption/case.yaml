@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: pm-ai-feature-weakest-assumption
+expected_outcome: |
+  Leads with the weakest load-bearing assumption (that 'customers ask for AI' is a validated problem), proposes a cheap test, notes missing success metric, gives a clear verdict, and leaves the decision with the PM.

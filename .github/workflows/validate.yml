@@ -1,0 +1,54 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lint JSON manifests and trigger evals
+        run: |
+          jq . .claude-plugin/plugin.json > /dev/null
+          jq . .claude-plugin/marketplace.json > /dev/null
+          jq -e 'length >= 10 and all(.[]; has("query") and has("should_trigger"))' evals/trigger-evals.json > /dev/null
+          echo "JSON files are valid."
+
+      - name: Check verdict terms are consistent
+        run: |
+          for term in stop rethink conditional go strong; do
+            for f in skills/sparring-partner/SKILL.md agents/devils-advocate.md README.md; do
+              grep -qw "$term" "$f" || { echo "::error file=$f::missing verdict term '$term'"; exit 1; }
+            done
+          done
+          echo "Verdict terms consistent across skill, agent, and README."
+
+      - name: Check every eval case has a prompt, case.yaml and a grader
+        run: |
+          for d in evals/*/; do
+            [ "$(basename "$d")" = "results" ] && continue
+            for f in prompt.md case.yaml; do
+              [ -f "$d$f" ] || { echo "::error::$d missing $f"; exit 1; }
+            done
+            ls "$d"graders/*.md > /dev/null 2>&1 || { echo "::error::$d has no graders"; exit 1; }
+          done
+          echo "Eval cases well-formed."
+
+      - name: Check SKILL.md stays lean
+        run: |
+          lines=$(wc -l < skills/sparring-partner/SKILL.md)
+          [ "$lines" -le 500 ] || { echo "::error::SKILL.md is $lines lines (limit 500)"; exit 1; }
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Validate plugin (strict)
+        run: claude plugin validate ./ --strict

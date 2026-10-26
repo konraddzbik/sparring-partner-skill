@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: brief-contradiction-stops-and-asks
+expected_outcome: |
+  The assistant notices that section 2 (premium, exclusive) contradicts section 4 (lead with cheapest), and asks the user which positioning leads, ideally with a recommendation, rather than writing copy that silently picks one or blends both.
+context:
+  scaffold_script: place-files.sh

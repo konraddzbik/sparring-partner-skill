@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: sales-forecast-qualification
+expected_outcome: |
+  Challenges 'commit' status: economic buyer not met, decision process/procurement unknown, budget unconfirmed, single-threaded; suggests concrete next steps and a forecast category change.

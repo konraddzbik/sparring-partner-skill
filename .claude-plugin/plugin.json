@@ -1,0 +1,12 @@
+{
+  "name": "sparring-partner",
+  "version": "1.0.0",
+  "description": "AI as a sparring partner for every role: challenges ideas, plans and decisions, asks for clarification when a wrong guess would be costly, resists sycophancy, and leaves the decision with the human. English and Polish.",
+  "author": {
+    "name": "Konrad Dzbik",
+    "url": "https://github.com/konraddzbik"
+  },
+  "repository": "https://github.com/konraddzbik/sparring-partner-skill",
+  "license": "MIT",
+  "keywords": ["critical-thinking", "decision-making", "devils-advocate", "premortem", "clarification", "anti-sycophancy", "review"]
+}
