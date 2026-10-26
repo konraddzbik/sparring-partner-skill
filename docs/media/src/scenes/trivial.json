@@ -1,0 +1,1 @@
+{"title": "claude \u2014 stays out of the way", "events": [{"k": "prompt", "t": "Fix the grammar, nothing else: 'their going to the meeting tomorow and we has the slides'"}, {"k": "blank"}, {"k": "pause", "ms": 900}, {"k": "say", "t": "'they're going to the meeting tomorrow and we have the slides'"}], "hold": 4000, "h": 230}

@@ -17,6 +17,14 @@ All notable changes to this project are documented here. Versions follow the `ve
 - CI: manifest lint, verdict-term consistency, eval-case shape, SKILL.md length, `claude plugin validate --strict`.
 - `research/`: deck sources (PL) and external research (clarification, sycophancy, challenge techniques, skill authoring, role frameworks).
 - `evals/RESULTS.md`: four eval iterations; mean score 0.90 with the skill vs 0.72 without.
+- Plugin icon (`.claude-plugin/icon.png`); README banner and demo GIFs replayed from real runs
+  (`docs/media/`, regenerate with `docs/media/src/render.py`).
+
+### Fixed
+- README: one-line install (`claude plugin install … --marketplace …`); manual and OpenCode installs
+  now create the target `skills` folder first (`cp -R` failed on a fresh machine); `gh skill`
+  scope/agent flags; Claude.ai zip command; update/uninstall commands; troubleshooting for denied
+  reads of the skill's `references/` in headless runs.
 
 ### Changed during evaluation
 - Clarification: answer-and-ask in the same turn by default; stated assumptions aren't extra questions.
