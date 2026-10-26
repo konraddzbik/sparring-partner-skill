@@ -1,0 +1,15 @@
+{
+  "name": "sparring-partner-skill",
+  "description": "A sparring-partner skill for any role in an organisation (engineering, product, design, marketing, sales, HR, finance, leadership, legal, ops, data) plus a read-only devil's-advocate agent. English and Polish.",
+  "owner": {
+    "name": "Konrad Dzbik",
+    "url": "https://github.com/konraddzbik"
+  },
+  "plugins": [
+    {
+      "name": "sparring-partner",
+      "source": "./",
+      "description": "Challenges ideas and decisions instead of rubber-stamping them; asks before guessing on material ambiguity; resists sycophancy."
+    }
+  ]
+}

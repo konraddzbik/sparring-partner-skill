@@ -1,0 +1,22 @@
+[
+  {"query": "ok so I've got this idea to move our whole customer onboarding to a self-serve flow and cut the CS team from 6 to 3, here's the 1-pager (onboarding-v2.md). poke holes in it before I take it to the exec meeting thursday", "should_trigger": true},
+  {"query": "Mam dwie oferty od dostawców chmury, AWS i Hetzner, dla naszego nowego produktu. Tabela porównania w załączniku. Pomóż mi zdecydować, ale bez ściemy — chcę wiedzieć, czego nie widzę", "should_trigger": true},
+  {"query": "play devil's advocate on my decision to drop the free tier from our pricing page next month. we have about 12k free users, 4% convert", "should_trigger": true},
+  {"query": "I'm head of people. we're thinking of switching performance reviews from annual to quarterly with peer ratings. what am I missing?", "should_trigger": true},
+  {"query": "zrób premortem planu migracji CRM z Salesforce na HubSpot, termin koniec stycznia, plan w pliku migracja.md", "should_trigger": true},
+  {"query": "Our Q1 campaign: €40k on LinkedIn ads targeting CTOs in DACH, goal 200 MQLs. Is this realistic? be brutally honest", "should_trigger": true},
+  {"query": "need you to build the new partner portal per the attached brief, though honestly the brief is kinda vague in places", "should_trigger": true},
+  {"query": "steelman the case for NOT hiring a second designer this year — I'm leaning towards hiring and want to see the strongest counterargument", "should_trigger": true},
+  {"query": "czy to ma sens? chcemy wprowadzić 4-dniowy tydzień pracy dla zespołu supportu od lutego, bez zmiany wynagrodzeń", "should_trigger": true},
+  {"query": "sanity check my 2027 revenue forecast in forecast.xlsx before the board sees it — growth assumptions are on the Inputs tab", "should_trigger": true},
+  {"query": "translate this product announcement into German, keep the tone the same", "should_trigger": false},
+  {"query": "what's the difference between MEDDIC and BANT sales qualification?", "should_trigger": false},
+  {"query": "fix the failing test in src/billing/invoice.test.ts, it's throwing a TypeError on line 42", "should_trigger": false},
+  {"query": "summarize this 30-page RFP into a one-page overview for the sales team", "should_trigger": false},
+  {"query": "write a premortem template I can share with my team as a Confluence page", "should_trigger": false},
+  {"query": "convert the attached meeting notes into a list of action items with owners", "should_trigger": false},
+  {"query": "popraw literówki i interpunkcję w tym mailu do klienta", "should_trigger": false},
+  {"query": "explain what the Cynefin framework is in simple terms for a workshop slide", "should_trigger": false},
+  {"query": "generate 10 subject lines for our black friday newsletter", "should_trigger": false},
+  {"query": "set up a GitHub Actions workflow that runs eslint on every PR", "should_trigger": false}
+]
