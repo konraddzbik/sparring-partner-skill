@@ -1,13 +1,146 @@
-# sparring-partner
+<p align="center">
+  <img src="docs/media/banner.png" alt="sparring-partner: AI that challenges your decisions instead of rubber-stamping them" width="100%">
+</p>
 
-A Claude Skill that turns AI into a **sparring partner** for anyone in an organisation:
-engineers, product managers, designers, marketers, sales, HR, finance, leadership, legal,
-operations and data people. It challenges ideas, plans and decisions instead of rubber-stamping
-them, **asks for clarification when a wrong guess would be costly** instead of silently guessing,
-resists sycophancy, and leaves the decision with the human who will carry it.
+<p align="center">
+  <a href="https://github.com/konraddzbik/sparring-partner-skill/actions/workflows/validate.yml"><img alt="validate" src="https://github.com/konraddzbik/sparring-partner-skill/actions/workflows/validate.yml/badge.svg"></a>
+  <img alt="version" src="https://img.shields.io/badge/version-1.0.0-d97757">
+  <img alt="Claude Code plugin" src="https://img.shields.io/badge/Claude%20Code-plugin-58a6ff">
+  <img alt="languages" src="https://img.shields.io/badge/lang-EN%20%7C%20PL-3fb950">
+  <a href="LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-lightgrey"></a>
+</p>
 
-English and Polish. Works in Claude Code (plugin), and as a plain skill folder in GitHub Copilot
-CLI, OpenCode, or Claude.ai.
+<p align="center">
+  <b>A Claude Skill that turns AI into a sparring partner for anyone in an organisation.</b><br>
+  It challenges ideas, plans and decisions instead of rubber-stamping them, asks before guessing when
+  a wrong guess would be costly, resists sycophancy, and leaves the decision with the human who will carry it.
+</p>
+
+<p align="center">
+  <a href="#install">Install</a> ·
+  <a href="#see-it-in-action">Demo</a> ·
+  <a href="#what-it-does">What it does</a> ·
+  <a href="#usage">Usage</a> ·
+  <a href="#evals">Evals</a> ·
+  <a href="#troubleshooting">Troubleshooting</a>
+</p>
+
+<p align="center">
+  <img src="docs/media/confirm.gif" alt="Asked to 'just confirm' a PHP-to-Go billing rewrite, Claude loads the skill and returns a conditional verdict with the assumptions to test" width="860">
+</p>
+
+Engineers, product managers, designers, marketers, sales, HR, finance, leadership, legal,
+operations and data people. English and Polish. Works in Claude Code (plugin), GitHub Copilot CLI,
+OpenCode, and Claude.ai.
+
+---
+
+## Install
+
+**Claude Code, one line** (Claude Code 2.1.275 or later):
+
+```bash
+claude plugin install sparring-partner --marketplace konraddzbik/sparring-partner-skill
+```
+
+<p align="center">
+  <img src="docs/media/install.gif" alt="Installing the plugin and checking its components and token cost" width="760">
+</p>
+
+That's it. Start a new session and the skill and the `devils-advocate` agent are available. It
+adds about **370 tokens** to each session; the full skill (~4k tokens) loads only when it's used.
+
+<details>
+<summary><b>Other ways to install</b>: two-step marketplace, manual copy, Copilot CLI, OpenCode, Claude.ai</summary>
+
+### Claude Code: from inside a session
+
+```text
+/plugin marketplace add konraddzbik/sparring-partner-skill
+/plugin install sparring-partner@sparring-partner-skill
+```
+
+### Claude Code: manual copy (skill only, no agent)
+
+```bash
+git clone https://github.com/konraddzbik/sparring-partner-skill /tmp/sparring-partner-skill
+
+# personal (all projects)
+mkdir -p ~/.claude/skills
+cp -R /tmp/sparring-partner-skill/skills/sparring-partner ~/.claude/skills/
+
+# or per project (shared with your team via the repo)
+mkdir -p .claude/skills
+cp -R /tmp/sparring-partner-skill/skills/sparring-partner .claude/skills/
+```
+
+The `devils-advocate` agent ships only with the plugin. To get it with a manual install, also copy
+`agents/devils-advocate.md` into `~/.claude/agents/`.
+
+### GitHub Copilot CLI (and other agents via `gh skill`)
+
+```bash
+# project scope (default): installs into this repo
+gh skill install konraddzbik/sparring-partner-skill sparring-partner
+
+# user scope, for every project
+gh skill install konraddzbik/sparring-partner-skill sparring-partner --scope user
+
+# another host, e.g. Claude Code, Cursor, Codex, OpenCode
+gh skill install konraddzbik/sparring-partner-skill sparring-partner --agent claude-code
+```
+
+### OpenCode
+
+```bash
+mkdir -p ~/.config/opencode/skills
+cp -R /tmp/sparring-partner-skill/skills/sparring-partner ~/.config/opencode/skills/
+```
+
+### Claude.ai (non-technical teams)
+
+```bash
+cd /tmp/sparring-partner-skill/skills && zip -r sparring-partner.zip sparring-partner
+```
+
+Upload `sparring-partner.zip` under **Settings → Capabilities → Skills** (or have an org admin
+provision it). Non-developers don't need a terminal to use it.
+
+</details>
+
+**Check it worked:** `claude plugin details sparring-partner` should list 1 skill and 1 agent.
+**Update:** `claude plugin marketplace update sparring-partner-skill && claude plugin update sparring-partner@sparring-partner-skill`.
+**Remove:** `claude plugin uninstall sparring-partner@sparring-partner-skill`.
+
+---
+
+## See it in action
+
+Every recording below is a replay of a real `claude -p` run (Claude Code 2.1.310, Opus 5.5) with
+the plugin installed. The text is the model's actual output; `[…]` marks where a long answer was
+shortened to fit.
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <b>Asks before building</b> (Polish)<br>
+      <sub>A one-line brief for a Q1 marketing strategy. Instead of a generic template, it asks three ranked questions, each with why it matters and a default.</sub><br><br>
+      <img src="docs/media/vague.gif" alt="Given 'Przygotuj strategię marketingową na Q1', Claude asks three ranked questions with defaults in Polish">
+    </td>
+    <td width="50%" valign="top">
+      <b>Unanchored second opinion</b><br>
+      <sub>The read-only <code>devils-advocate</code> agent reviews a proposal it hasn't seen discussed, and returns a <i>rethink</i> verdict with the cheapest tests.</sub><br><br>
+      <img src="docs/media/agent.gif" alt="The devils-advocate agent reviews a proposal to replace a support team with a chatbot">
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" valign="top">
+      <b>Stays out of the way</b><br>
+      <sub>A trivial edit doesn't trigger the skill. No critique, no questions, just the fix.</sub><br><br>
+      <img src="docs/media/trivial.gif" alt="A grammar fix is done directly, without loading the skill" width="100%">
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -62,60 +195,19 @@ doesn't. The supporting research is summarised in
 
 | EN | PL | Meaning |
 |---|---|---|
-| **stop** | **stop** | Fundamentally flawed, harmful or illegal as stated. |
-| **rethink** | **do przemyślenia** | A load-bearing assumption fails. |
-| **conditional** | **warunkowo** | Go, if the named conditions are met. |
-| **go** | **działaj** | Solid; remaining risks known and acceptable. |
-| **strong** | **mocne** | Tried to break it and couldn't. Rare. |
+| 🟥 **stop** | **stop** | Fundamentally flawed, harmful or illegal as stated. |
+| 🟧 **rethink** | **do przemyślenia** | A load-bearing assumption fails. |
+| 🟨 **conditional** | **warunkowo** | Go, if the named conditions are met. |
+| 🟩 **go** | **działaj** | Solid; remaining risks known and acceptable. |
+| 🟦 **strong** | **mocne** | Tried to break it and couldn't. Rare. |
 
----
-
-## What you get
+### What you get
 
 | Component | Type | What it does |
 |---|---|---|
 | `sparring-partner` | **Skill** | The stance, the clarification gate, the toolkit, role lenses, output shape. |
 | `devils-advocate` | **Agent** | Read-only, fresh-context challenger. It hasn't seen your conversation, so it isn't anchored by it. Returns a structured challenge and a verdict. Never edits, never decides. |
 | `evals/` | **Eval suite** | 12 behavioural cases (EN/PL, 8 roles) plus 20 trigger queries. |
-
----
-
-## Install
-
-### Claude Code: plugin marketplace (recommended)
-
-```bash
-/plugin marketplace add konraddzbik/sparring-partner-skill
-/plugin install sparring-partner
-```
-
-### Claude Code: manual
-
-```bash
-# personal (all projects)
-git clone https://github.com/konraddzbik/sparring-partner-skill /tmp/sparring-partner-skill
-cp -R /tmp/sparring-partner-skill/skills/sparring-partner ~/.claude/skills/
-
-# project (shared with your team via the repo)
-cp -R /tmp/sparring-partner-skill/skills/sparring-partner .claude/skills/
-```
-
-### GitHub Copilot CLI
-
-```bash
-gh skill install konraddzbik/sparring-partner-skill sparring-partner
-```
-
-### OpenCode
-
-```bash
-cp -R /tmp/sparring-partner-skill/skills/sparring-partner ~/.config/opencode/skills/
-```
-
-### Claude.ai (non-technical teams)
-
-Zip the `skills/sparring-partner` folder and upload it under **Settings → Capabilities → Skills**
-(or have an org admin provision it). Non-developers don't need a terminal to use it.
 
 ---
 
@@ -163,6 +255,10 @@ claude plugin eval . --trust-plugin --scaffold -j 4
 claude plugin eval . --case 'pushback-*'
 ```
 
+Last run: **0.90 with the skill vs 0.72 without** (mean grader pass rate, 12 cases). The biggest
+gain is asking instead of guessing on a vague brief (0.90 vs 0.10). Full table, open gaps and cost
+in [`evals/RESULTS.md`](evals/RESULTS.md).
+
 Cases cover: asking before building on a vague brief (PL), *not* asking on a trivial rewrite,
 weakest-assumption critique (product), me first (hiring), base rates (finance, PL), holding a
 position under pushback, saying "go" briefly on a solid plan, stopping on a contradictory brief,
@@ -172,7 +268,31 @@ rewrite premortem (engineering, PL).
 `evals/trigger-evals.json` holds 20 should / shouldn't-trigger queries, including near-misses
 (e.g. "explain Cynefin", "write a premortem template"), for description tuning with skill-creator.
 
-Results of the last run are in [`evals/RESULTS.md`](evals/RESULTS.md).
+---
+
+## Troubleshooting
+
+**The skill or agent says it couldn't read its reference files.** The role lenses and technique
+notes live in `references/`, inside the plugin folder, which is outside your project. In an
+interactive session Claude asks once for permission to read them. In headless runs
+(`claude -p`, CI) or strict permission modes the read is denied and the skill falls back to its
+core instructions. To allow it, add this to `~/.claude/settings.json` (or the project's
+`.claude/settings.json`):
+
+```json
+{
+  "permissions": {
+    "allow": ["Read(~/.claude/plugins/**)"]
+  }
+}
+```
+
+For a manual install, use the path you copied the skill to, e.g. `Read(~/.claude/skills/sparring-partner/**)`.
+
+**The skill doesn't trigger on a writing task.** Expected: see [Always-on mode](#always-on-mode-optional).
+
+**`cp: ... No such file or directory` on a manual install.** The target `skills` folder doesn't
+exist yet; run the `mkdir -p` line first.
 
 ---
 
@@ -182,7 +302,8 @@ Results of the last run are in [`evals/RESULTS.md`](evals/RESULTS.md).
 sparring-partner-skill/
 ├── .claude-plugin/
 │   ├── plugin.json
-│   └── marketplace.json
+│   ├── marketplace.json
+│   └── icon.png
 ├── .github/workflows/validate.yml   # manifest lint, term consistency, claude plugin validate
 ├── skills/sparring-partner/
 │   ├── SKILL.md                     # the skill
@@ -196,6 +317,7 @@ sparring-partner-skill/
 ├── evals/                           # 12 behavioural cases + trigger-evals.json
 ├── examples/.sparring-partner.md    # sample project config
 ├── research/                        # source notes behind evidence.md
+├── docs/media/                      # README banner and GIFs (+ src/ to regenerate them)
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 └── LICENSE
